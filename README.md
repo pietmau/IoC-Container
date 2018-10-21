@@ -63,3 +63,39 @@ class MainActivity : AppCompatActivity() {
 ```
 this will lazily initialize the presenter.
 
+## Field and constructor injection with annotations
+
+Annotate the constructors with @Inject:
+```
+class Presenter @Inject constructor(private val model: Model, private val api: Api)
+```
+
+Let the injector scan the classes to be injected
+(TODO: scan recursively to get the graph without adding all the classes manually):
+```
+Injector.scan(Presenter::class)
+Injector.scan(Api::class)
+Injector.scan(Model::class)
+```
+
+Annotate the fields with @Inject:
+```
+@Inject lateinit var presenter: Presenter
+```
+
+Finally perform injection:
+```
+class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var presenter: Presenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ...
+        Injector.inject(this)
+        presenter.run()
+    }
+}
+```
+
+
+

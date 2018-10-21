@@ -13,10 +13,11 @@ class Providers {
     }
 
     inline fun <reified T> providerForClass() =
-        map[T::class.java] as? Provider<T> ?: throw MissingProviderException()
+        map[T::class.java] as? Provider<T>
+            ?: throw MissingProviderException(T::class.java.simpleName)
 
     inline fun <T> providerForClass(clazz: Class<T>) =
-        map[clazz] as? Provider<T> ?: throw MissingProviderException()
+        map[clazz] as? Provider<T> ?: throw MissingProviderException(clazz.simpleName)
 
-    class MissingProviderException : Exception("Missing provider")
+    class MissingProviderException(simpleName: String) : Exception("Missing provider  " + simpleName)
 }

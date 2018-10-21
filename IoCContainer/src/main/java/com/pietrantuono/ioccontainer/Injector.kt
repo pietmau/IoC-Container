@@ -15,7 +15,7 @@ class Injector(val providers: Providers) {
 
     inline fun <reified T> get(): T = providers.providerForClass<T>().get(T::class.java, this)
 
-    inline fun <reified T> get(clazz: Class<T>) = providers.providerForClass<T>().get(T::class.java, this)
+    inline fun <T> get(clazz: Class<T>) = providers.providerForClass(clazz).get(clazz, this)
 
     fun inject(obj: Any) {
         for (prop in obj::class.memberProperties) {
@@ -29,23 +29,24 @@ class Injector(val providers: Providers) {
         }
     }
 
+    //TODO throw exception if it finds many constructors
     inline fun <reified T : Any> scan(clazz: KClass<T>) {
         val constructors = clazz.constructors
         val constructor = constructors
             .map { it to it.annotations }
             .filter { (_, annotations) -> annotations.isNotEmpty() }
             .find { (_, annotations) -> annotations.find { it is Inject } != null }
-            ?.first//TODO throw exception if finds multiple
+            ?.first
         constructor ?: return
         providers.addProvider(clazz.java, ReflectiveProvider(constructor))
     }
 
-    @SuppressWarnings("unchecked")
     private fun injectByType(type: Class<*>, prop: KMutableProperty<*>, obj: Any) {
         val value = getByType(type)
         prop.setter.call(obj, value)
     }
 
+    @SuppressWarnings("unchecked")
     private fun getByType(type: Class<*>): Any? {
         val provider = providers.providerForClass(type) as? Provider<Any>
         return provider?.get(Any::class.java, this)
@@ -61,6 +62,10 @@ class Injector(val providers: Providers) {
 
         fun inject(obj: Any) {
             injector.inject(obj)
+        }
+
+        inline fun <reified T : Any> scan(clazz: KClass<T>) {
+            injector.scan(clazz)
         }
     }
 }
