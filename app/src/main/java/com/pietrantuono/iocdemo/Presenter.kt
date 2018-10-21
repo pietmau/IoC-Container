@@ -4,7 +4,9 @@ import com.pietrantuono.ioccontainer.Injector
 import com.pietrantuono.ioccontainer.Provider
 
 
-class Presenter(private val model: Model)
+class Presenter(private val model: Model) {
+    fun run() {}
+}
 
 class Model
 
