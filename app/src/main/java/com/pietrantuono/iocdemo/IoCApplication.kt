@@ -1,7 +1,7 @@
 package com.pietrantuono.iocdemo
 
 import android.app.Application
-import com.pietrantuono.ioccontainer.Injector
+import com.pietrantuono.ioccontainer.*
 
 
 class IoCApplication : Application() {

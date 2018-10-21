@@ -8,6 +8,10 @@ class Providers {
         map.put(clazz, provider)
     }
 
+    fun addProviderInternal(clazz: Class<out Any>, provider: Provider<Any>) {
+        map.put(clazz, provider)
+    }
+
     inline fun <reified T> providerForClass() =
         map[T::class.java] as? Provider<T> ?: throw MissingProviderException()
 

@@ -40,3 +40,7 @@ I
 IoCContainer/build.gradle,d/8/d806c0beeeea71a79006892b83002caaf17e5cc1
 j
 :app/src/main/java/com/pietrantuono/iocdemo/MainActivity.kt,7/a/7a3fc8ccf2968d94c2590577c93264384bcf88d5
+h
+8app/src/main/java/com/pietrantuono/iocdemo/CoffeBeans.kt,6/9/6907e15db5941d5bb16c0a773fbc5b0f6ffcf6e9
+b
+2app/src/main/java/com/pietrantuono/iocdemo/Moka.kt,6/4/642fa7e05108499162a8be119d7a0eadf487ffbf
