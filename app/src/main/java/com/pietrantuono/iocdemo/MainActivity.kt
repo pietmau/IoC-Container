@@ -2,14 +2,27 @@ package com.pietrantuono.iocdemo
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.pietrantuono.ioccontainer.fieldInject
+import javax.inject.Inject
+import kotlin.reflect.full.declaredMemberProperties
 
 class MainActivity : AppCompatActivity() {
-    val presenter: Presenter by fieldInject()
+    @set:[Inject]
+    lateinit var presenter: Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter.run()
+        val declaredMemberProperties = MainActivity::class.declaredMemberProperties
+        ///val ann = declaredMemberProperties.findAnnotation<Inject>()
+        for (prop in declaredMemberProperties) {
+            val annotatopns = prop.annotations
+            fff()
+        }
+
+    }
+
+    private fun fff() {
+
+
     }
 }
